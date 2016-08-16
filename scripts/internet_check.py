@@ -16,6 +16,7 @@ TEST_HOST = "google.com"
 
 
 def is_connected():
+    """ Perform socket connect to port 80 to verify connectivity """
     try:
         host = socket.gethostbyname(TEST_HOST)
         socket.create_connection((host, 80), 2)

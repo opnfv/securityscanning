@@ -29,6 +29,7 @@ class SetUp:
         self.args = args
 
     def keystonepass(self):
+        """ Used to retrieve keystone password """
         com = self.args[0]
         client = paramiko.SSHClient()
         privatekeyfile = os.path.expanduser('/root/.ssh/id_rsa')
@@ -51,6 +52,7 @@ class SetUp:
         client.close()
 
     def getockey(self):
+        """ Used to retrieve, SSH overcloud keys """
         remotekey = self.args[0]
         localkey = self.args[1]
         privatekeyfile = os.path.expanduser('/root/.ssh/id_rsa')
@@ -82,6 +84,7 @@ class ConnectionManager:
         self.args = args
 
     def remotescript(self):
+        """ Function to execute remote scripts """
         localpath = self.args[0]
         remotepath = self.args[1]
         com = self.args[2]
@@ -90,7 +93,6 @@ class ConnectionManager:
         privatekeyfile = os.path.expanduser('/root/.ssh/id_rsa')
         selectedkey = paramiko.RSAKey.from_private_key_file(privatekeyfile)
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        # Connection to undercloud
         try:
             client.connect(INSTALLER_IP, port=22, username='stack',
                            pkey=selectedkey)
@@ -111,7 +113,6 @@ class ConnectionManager:
                                          (local_addr))
         remote_client = paramiko.SSHClient()
         remote_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        # Tunnel to overcloud
         try:
             remote_client.connect('127.0.0.1', port=22, username=self.user,
                                   key_filename=self.localkey, sock=channel)
@@ -130,24 +131,22 @@ class ConnectionManager:
         output = ""
         stdin, stdout, stderr = remote_client.exec_command(com)
         stdout = stdout.readlines()
-        # remove script
         sftp.remove(remotepath)
         remote_client.close()
         client.close()
-        # Pipe back stout
         for line in stdout:
             output = output + line
         if output != "":
             return output
 
     def remotecmd(self):
+        """ Used to execute remote commands """
         com = self.args[0]
 
         client = paramiko.SSHClient()
         privatekeyfile = os.path.expanduser('/root/.ssh/id_rsa')
         selectedkey = paramiko.RSAKey.from_private_key_file(privatekeyfile)
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        # Connection to undercloud
         try:
             client.connect(INSTALLER_IP, port=22, username='stack',
                            pkey=selectedkey)
@@ -168,7 +167,6 @@ class ConnectionManager:
                                          (local_addr))
         remote_client = paramiko.SSHClient()
         remote_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        # Tunnel to overcloud
         try:
             remote_client.connect('127.0.0.1', port=22, username=self.user,
                                   key_filename=self.localkey, sock=channel)
@@ -192,6 +190,7 @@ class ConnectionManager:
         client.close()
 
     def download_reports(self):
+        """ Function to retrieve reports from remote nodes """
         dl_folder = self.args[0]
         reportfile = self.args[1]
         reportname = self.args[2]
@@ -200,7 +199,6 @@ class ConnectionManager:
         privatekeyfile = os.path.expanduser('/root/.ssh/id_rsa')
         selectedkey = paramiko.RSAKey.from_private_key_file(privatekeyfile)
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        # Connection to overcloud
         try:
             client.connect(INSTALLER_IP, port=22, username='stack',
                            pkey=selectedkey)
@@ -221,7 +219,6 @@ class ConnectionManager:
                                          (local_addr))
         remote_client = paramiko.SSHClient()
         remote_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        # Tunnel to overcloud
         try:
             remote_client.connect('127.0.0.1', port=22, username=self.user,
                                   key_filename=self.localkey, sock=channel)
@@ -234,7 +231,6 @@ class ConnectionManager:
         except socket.error:
             logger.error("Socker Connection failed for "
                          "undercloud host: {0}".format(self.host))
-        # Download the reports
         sftp = remote_client.open_sftp()
         logger.info("Downloading \"{0}\"...".format(reportname))
         sftp.get(reportfile, ('{0}/{1}'.format(dl_folder, reportname)))

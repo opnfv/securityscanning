@@ -49,7 +49,7 @@ args = parser.parse_args()
 cfgparse = SafeConfigParser()
 cfgparse.read(args.cfgfile)
 
-#  Grab Undercloud key
+#  Obtain Undercloud key
 remotekey = cfgparse.get('undercloud', 'remotekey')
 localkey = cfgparse.get('undercloud', 'localkey')
 setup = connect.SetUp(remotekey, localkey)
@@ -69,6 +69,7 @@ nova = client.Client(2, session=sess)
 
 
 def run_tests(host, nodetype):
+    """ Main tool runtime function """
     user = cfgparse.get(nodetype, 'user')
     port = cfgparse.get(nodetype, 'port')
     connect.logger.info("Host: {0} Selected Profile: {1}".format(host,
@@ -97,7 +98,7 @@ def run_tests(host, nodetype):
 
 
 def nova_iterate():
-    # Find compute nodes, active with network on ctlplane
+    """ Iterates over the Nova API to gather a list of node IP's"""
     for server in nova.servers.list():
         if server.status == 'ACTIVE' and 'compute' in server.name:
             networks = server.networks
@@ -113,6 +114,7 @@ def nova_iterate():
 
 
 def internet_check(host, nodetype):
+    """ Performs connectivity test using scripts/internet_check.py """
     import connect
     user = cfgparse.get(nodetype, 'user')
     port = cfgparse.get(nodetype, 'port')
@@ -129,6 +131,9 @@ def internet_check(host, nodetype):
 
 
 def createfiles(host, port, user, localkey):
+    """ Creates required tempfiles needed for OpenSCAP to run.
+    Executes script file: /scripts/createfiles.py
+    """
     import connect
     global tmpdir
     localpath = functest_dir + 'scripts/createfiles.py'
@@ -140,6 +145,7 @@ def createfiles(host, port, user, localkey):
 
 
 def install_pkg(host, port, user, localkey):
+    """ Installs OpenSCAP binarie and main release scap content"""
     import connect
     com = 'sudo yum -y install openscap-scanner scap-security-guide'
     connect = connect.ConnectionManager(host, port, user, localkey, com)
@@ -147,6 +153,7 @@ def install_pkg(host, port, user, localkey):
 
 
 def run_scanner(host, port, user, localkey, nodetype):
+    """ Peforms the actual OpenSCAP scan operation"""
     import connect
     scantype = cfgparse.get(nodetype, 'scantype')
     profile = cfgparse.get(nodetype, 'profile')
@@ -179,8 +186,8 @@ def run_scanner(host, port, user, localkey, nodetype):
 
 
 def post_tasks(host, port, user, localkey, nodetype):
+    """ Create download folder for functest dashboard and download reports """
     import connect
-    # Create the download folder for functest dashboard and download reports
     reports_dir = cfgparse.get(nodetype, 'reports_dir')
     dl_folder = os.path.join(reports_dir, host + "_" +
                              datetime.datetime.
@@ -195,6 +202,7 @@ def post_tasks(host, port, user, localkey, nodetype):
 
 
 def removepkg(host, port, user, localkey, nodetype):
+    """ Removes all packages (if Clean = True is used in ini config) """
     import connect
     com = 'sudo yum -y remove openscap-scanner scap-security-guide'
     connect = connect.ConnectionManager(host, port, user, localkey, com)
@@ -202,6 +210,7 @@ def removepkg(host, port, user, localkey, nodetype):
 
 
 def cleandir(host, port, user, localkey, nodetype):
+    """ Removes all scan files (if Clean = True is used in ini config) """
     import connect
     com = 'sudo rm -r {0}'.format(tmpdir.rstrip())
     connect = connect.ConnectionManager(host, port, user, localkey, com)
@@ -209,4 +218,5 @@ def cleandir(host, port, user, localkey, nodetype):
 
 
 if __name__ == '__main__':
+    """ Main entry_point """
     nova_iterate()
