@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_d7dfdc0b",
+        "filename": "INFO",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3299
+      },
+      "writtenOn": "2016-09-27T01:00:01Z",
+      "side": 1,
+      "message": "Are there links missing here?",
+      "revId": "9befc1784e09a7c4d777e536e79ee12381b5c9fc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_f7e458e2",
+        "filename": "LICENSE",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3299
+      },
+      "writtenOn": "2016-09-27T01:00:01Z",
+      "side": 1,
+      "message": "This should probably be 2016 since this is a new project?",
+      "revId": "9befc1784e09a7c4d777e536e79ee12381b5c9fc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
