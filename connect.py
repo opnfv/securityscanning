@@ -232,9 +232,9 @@ class ConnectionManager:
             logger.error("Socker Connection failed for "
                          "undercloud host: {0}".format(self.host))
         sftp = remote_client.open_sftp()
-        logger.info("Downloading \"{0}\"...".format(reportname))
+        logger.debug("Downloading \"{0}\"...".format(reportname))
         sftp.get(reportfile, ('{0}/{1}'.format(dl_folder, reportname)))
-        logger.info("Downloading \"{0}\"...".format(resultsname))
+        logger.debug("Downloading \"{0}\"...".format(resultsname))
         sftp.get(reportfile, ('{0}/{1}'.format(dl_folder, resultsname)))
         sftp.close()
         transport.close()
