@@ -30,7 +30,7 @@ __url__ = 'https://wiki.opnfv.org/display/functest/Functest+Security'
 # Global vars
 INSTALLER_IP = os.getenv('INSTALLER_IP')
 oscapbin = 'sudo /bin/oscap'
-functest_dir = '/home/opnfv/repos/functest/testcases/security_scan/'
+repo_dir = '/home/opnfv/repos/securityscanning/'
 
 # Apex Spefic var needed to query Undercloud
 if os.getenv('OS_AUTH_URL') is None:
@@ -118,7 +118,7 @@ def internet_check(host, nodetype):
     import connect
     user = cfgparse.get(nodetype, 'user')
     port = cfgparse.get(nodetype, 'port')
-    localpath = functest_dir + 'scripts/internet_check.py'
+    localpath = repo_dir + 'scripts/internet_check.py'
     remotepath = '/tmp/internet_check.py'
     com = 'python /tmp/internet_check.py'
     testconnect = connect.ConnectionManager(host, port, user, localkey,
@@ -136,7 +136,7 @@ def createfiles(host, port, user, localkey):
     """
     import connect
     global tmpdir
-    localpath = functest_dir + 'scripts/createfiles.py'
+    localpath = repo_dir + 'scripts/createfiles.py'
     remotepath = '/tmp/createfiles.py'
     com = 'python /tmp/createfiles.py'
     connect = connect.ConnectionManager(host, port, user, localkey,
