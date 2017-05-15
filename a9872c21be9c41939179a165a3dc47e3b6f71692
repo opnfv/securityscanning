@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_d75ef675",
+        "filename": "connect.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-15T09:16:30Z",
+      "side": 1,
+      "message": "I am not sure that\u0027s the best place.",
+      "revId": "a9872c21be9c41939179a165a3dc47e3b6f71692",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
