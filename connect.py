@@ -10,22 +10,23 @@
 #
 # 0.1: OpenSCAP paramiko connection functions
 
+import logging
 import os
 import socket
 import paramiko
 
-import functest.utils.functest_logger as ft_logger
 
 # add installer IP from env
 INSTALLER_IP = os.getenv('INSTALLER_IP')
 
 # Set up loggers
-logger = ft_logger.Logger("security_scan").getLogger()
+logger = logging.getLogger('security_scan')
 paramiko.util.log_to_file("/var/log/paramiko.log")
 
 
 class SetUp:
     def __init__(self, *args):
+        logging.basicConfig()
         self.args = args
 
     def keystonepass(self):
