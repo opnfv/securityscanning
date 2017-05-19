@@ -219,4 +219,5 @@ def cleandir(host, port, user, localkey, nodetype):
 
 if __name__ == '__main__':
     """ Main entry_point """
+    logging.basicConfig()
     nova_iterate()

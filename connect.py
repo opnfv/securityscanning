@@ -26,7 +26,6 @@ paramiko.util.log_to_file("/var/log/paramiko.log")
 
 class SetUp:
     def __init__(self, *args):
-        logging.basicConfig()
         self.args = args
 
     def keystonepass(self):
