@@ -34,6 +34,24 @@
       "revId": "a9872c21be9c41939179a165a3dc47e3b6f71692",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_57419ca7",
+        "filename": "connect.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-19T11:48:56Z",
+      "side": 1,
+      "message": "diff --git a/security_scan.py b/security_scan.py\nindex 2c171fc..6595faf 100644\n--- a/security_scan.py\n+++ b/security_scan.py\n@@ -219,4 +219,5 @@ def cleandir(host, port, user, localkey, nodetype):\n \n if __name__ \u003d\u003d \u0027__main__\u0027:\n     \"\"\" Main entry_point \"\"\"\n+    logging.basicConfig()\n     nova_iterate()",
+      "parentUuid": "9ab8dda7_97507e5f",
+      "revId": "a9872c21be9c41939179a165a3dc47e3b6f71692",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
