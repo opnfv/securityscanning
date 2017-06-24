@@ -13,12 +13,13 @@
 # all trace of the scan is removed from the remote system.
 
 import argparse
+from ConfigParser import SafeConfigParser
 import connect
 import datetime
 import os
+import pkg_resources
 import sys
 
-from ConfigParser import SafeConfigParser
 from keystoneclient.auth.identity import v2
 from keystoneclient import session
 from novaclient import client
@@ -30,7 +31,6 @@ __url__ = 'https://wiki.opnfv.org/display/functest/Functest+Security'
 # Global vars
 INSTALLER_IP = os.getenv('INSTALLER_IP')
 oscapbin = 'sudo /bin/oscap'
-repo_dir = '/home/opnfv/repos/securityscanning/'
 
 # Apex Spefic var needed to query Undercloud
 if os.getenv('OS_AUTH_URL') is None:
@@ -118,7 +118,9 @@ def internet_check(host, nodetype):
     import connect
     user = cfgparse.get(nodetype, 'user')
     port = cfgparse.get(nodetype, 'port')
-    localpath = repo_dir + 'scripts/internet_check.py'
+    localpath = pkg_resources.resource_filename(
+        pkg_resources.Requirement.parse("securityscanning"),
+        'scripts/internet_check.py')
     remotepath = '/tmp/internet_check.py'
     com = 'python /tmp/internet_check.py'
     testconnect = connect.ConnectionManager(host, port, user, localkey,
@@ -136,7 +138,9 @@ def createfiles(host, port, user, localkey):
     """
     import connect
     global tmpdir
-    localpath = repo_dir + 'scripts/createfiles.py'
+    localpath = pkg_resources.resource_filename(
+        pkg_resources.Requirement.parse("securityscanning"),
+        'scripts/createfiles.py')
     remotepath = '/tmp/createfiles.py'
     com = 'python /tmp/createfiles.py'
     connect = connect.ConnectionManager(host, port, user, localkey,
