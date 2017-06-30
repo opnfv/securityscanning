@@ -221,7 +221,6 @@ def cleandir(host, port, user, localkey, nodetype):
     connect.remotecmd()
 
 
-if __name__ == '__main__':
-    """ Main entry_point """
+def main():
     logging.basicConfig()
     nova_iterate()
